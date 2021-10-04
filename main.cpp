@@ -4,28 +4,30 @@
 int main() {
     std::ifstream statement;
     statement.open("..\\Statement.txt");
-    std::string names[20];
-    std::string surnames[20];
-    std::string dates[20];
-    int salary[20];
-    int i = 0;
+    if (!statement.is_open()) {
+        std::cout << "File open error!";
+        return 666;
+    }
+    std::string name[2] = {" ", " "};
+    std::string surname[2] = {" ", " "};
+    std::string date[2] = {" ", " "};
+    int salary[2] = {0, 0};
     int result = 0;
-    int max = 0;
-    int index;
     while (!statement.eof()) {
-        statement >> names[i];
-        statement >> surnames[i];
-        statement >> salary[i];
-        statement >> dates[i];
-        result += salary[i];
-        if (salary[i] > max) {
-            max = salary[i];
-            index = i;
+        statement >> name[1];
+        statement >> surname[1];
+        statement >> salary[1];
+        statement >> date[1];
+        result += salary[1];
+        if (salary[1] > salary[0]) {
+            salary[0] = salary[1];
+            name[0] = name[1];
+            surname[0] = surname[1];
+            date[0] = date[1];
         }
-        ++i;
     }
 
     std::cout << "Total payments: " << result << std::endl;
-    std::cout << "Maximum payment: " << names[index] << " " << surnames[index] << " " << max << " " << dates[index] << std::endl;
+    std::cout << "Maximum payment: " << name[0] << " " << surname[0] << " " << salary[0] << " " << date[0] << std::endl;
     return 0;
 }
